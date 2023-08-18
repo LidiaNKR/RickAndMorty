@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SwiftUI
 
-class CharactersCollectionViewController: UICollectionViewController {
+class CharactersCollectionViewController: UICollectionViewController, ObservableObject {
     
     // MARK: - Private properties
     private var viewModel: CollectionViewViewModelType?
@@ -21,7 +22,8 @@ class CharactersCollectionViewController: UICollectionViewController {
         collectionView.backgroundColor = Constant.viewBackGroundColor
         
         viewModel = CharacterCollectionViewModel()
-        viewModel?.fetchData {
+        viewModel?.fetchData { [weak self] in
+            guard let self = self else { return }
             self.collectionView.reloadData()
         }
         
@@ -44,6 +46,16 @@ class CharactersCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { return }
+        viewModel.selectItem(atIndexPath: indexPath)
+        if let navigationController = navigationController {
+            let characterDetailViewController = CharacterDetailView()
+                .environmentObject(self)
+            var char = CharacterDetailView()
+            char.viewModel = viewModel.viewModelForSelectedRow()
+            let hostingView = UIHostingController(rootView: characterDetailViewController)
+            navigationController.pushViewController(hostingView, animated: true)
+        }
     }
     
     // MARK: - Private Methods
@@ -55,7 +67,8 @@ class CharactersCollectionViewController: UICollectionViewController {
     }
     
     @objc private func didPullToRefresh() {
-        viewModel?.fetchData {
+        viewModel?.fetchData { [weak self] in
+            guard let self = self else { return }
             self.collectionView.reloadData()
             self.collectionView.refreshControl?.endRefreshing()
         }
