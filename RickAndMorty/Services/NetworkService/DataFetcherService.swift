@@ -8,7 +8,12 @@
 import Foundation
 
 protocol DataFetcherServiceProtocol {
-    /// Получение персонажей.
+    /// Получение массива.
+    /// - Parameters:
+    ///   - completion: Обработчик завершения, в который возвращается результат выполнения функции.
+    func fetchRickAndMorty(completion: @escaping (RickAndMorty?) -> Void)
+    
+    /// Получение персонажа.
     /// - Parameters:
     ///   - completion: Обработчик завершения, в который возвращается результат выполнения функции.
     func fetchResult(completion: @escaping (Result?) -> Void)
@@ -26,6 +31,11 @@ final class DataFetcherService: DataFetcherServiceProtocol {
         self.networkDataFetcher = networkDataFetcher
     }
 
+    func fetchRickAndMorty(completion: @escaping (RickAndMorty?) -> Void) {
+        guard let url = APIURL.characters else { return }
+        networkDataFetcher.fetchGenericJSONData(url: url, completion: completion)
+    }
+    
     func fetchResult(completion: @escaping (Result?) -> Void) {
         guard let url = APIURL.characters else { return }
         networkDataFetcher.fetchGenericJSONData(url: url, completion: completion)
