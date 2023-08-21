@@ -8,15 +8,11 @@
 
 Основные классы:
 
-1. CharactersCollectionViewController (UIKit), который отображает изображения и имена персонажей в CollectionViewController. Обновление данных из сети осуществляется по свайп экрана сверху-вниз:
-
-<p align="center" width="100%">
-    <img width="30%" src="https://github.com/LidiaNKR/RickAndMorty/blob/c7a87b99ac2ea400106b981c9c1c618aa213d8fc/Images/MainView.png">
-</p>
+1. CharactersCollectionViewController (UIKit), который отображает изображения и имена персонажей в CollectionViewController. Обновление данных из сети осуществляется по свайп экрана сверху-вниз.
 
 2. CharacterDetailView (SwiftUI), отображающий более детальную информацию о интересующем персонаже, такую как: изображение, имя, рановидность, тип, происхождение и список эпизодов, в которых принимал участие данный персонаж. 
-
 <p align="center" width="100%">
+    <img width="30%" src="https://github.com/LidiaNKR/RickAndMorty/blob/c7a87b99ac2ea400106b981c9c1c618aa213d8fc/Images/MainView.png">
     <img width="30%" src="https://github.com/LidiaNKR/RickAndMorty/blob/c7a87b99ac2ea400106b981c9c1c618aa213d8fc/Images/DetailView.png">
 </p>
 
