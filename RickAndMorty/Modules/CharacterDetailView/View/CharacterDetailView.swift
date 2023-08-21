@@ -9,29 +9,28 @@ import SwiftUI
 
 struct CharacterDetailView: View {
     
+    weak var navigationController: UINavigationController?
     var viewModel: CharacterDetailViewModelType?
     
     var body: some View {
         GeometryReader { geo in
-            ScrollView {
-                VStack(alignment: .center, spacing: 24) {
-                    MainInfoView()
-                    
+            VStack {
+                NavigationBar(navigationController: navigationController)
+                    .padding([.leading, .trailing], 0)
+                ScrollView {
                     VStack(alignment: .center, spacing: 24) {
-                        AliveView()
-                        OriginView()
-                        EpisodesView()
+                        MainInfoView(viewModel: viewModel as! CharacterDetailViewModel)
+                        VStack(alignment: .center, spacing: 24) {
+                            InfoView(viewModel: viewModel as! CharacterDetailViewModel)
+                            OriginView(viewModel: viewModel as! CharacterDetailViewModel)
+                            EpisodesView(viewModel: viewModel as! CharacterDetailViewModel)
+                        }
                     }
                 }
+                .padding(.top)
             }
-            .padding(.top)
         }
         .background(Color(uiColor: Constant.viewBackGroundColor))
-    }
-}
-
-struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        CharacterDetailView()
+        .navigationBarHidden(true)
     }
 }

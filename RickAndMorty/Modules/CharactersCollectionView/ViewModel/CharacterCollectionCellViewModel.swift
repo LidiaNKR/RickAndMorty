@@ -8,7 +8,10 @@
 import Foundation
 
 protocol CollectionViewCellViewModelType: AnyObject {
+    ///Картинка персонажа
     var characterImage: String { get }
+    
+    ///Имя персонажа
     var characterName: String { get }
 }
 

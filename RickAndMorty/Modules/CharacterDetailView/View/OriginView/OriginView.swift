@@ -9,33 +9,24 @@ import SwiftUI
 
 struct OriginView: View {
     
-    let planetImage: String = "Planet"
-    let earth: String = "Earth"
-    let planet: String = "Planet"
-    
+    @ObservedObject var viewModel = CharacterDetailViewModel()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            
             TitleText(text: "Origin")
-            
             HStack(spacing: 16) {
-                
-                Image(planetImage)
+                Image("Planet")
                     .resizable()
                     .cornerRadius(Constant.cornerRadiusOfImageCell)
                     .frame(width: 64, height:64)
-                
-                VStack(spacing: 8) {
-                    
-                    Text(earth)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(viewModel.originEarth)
                         .font(
                             Font.custom("Gilroy", size: 17)
                                 .weight(.semibold)
                         )
                         .foregroundColor(.white)
-                    
-                    Text(planet)
+                    Text("Planet")
                         .font(
                             Font.custom("Gilroy", size: 13)
                                 .weight(.medium)
@@ -49,11 +40,5 @@ struct OriginView: View {
             .background(Color(uiColor: Constant.cellBackGroundColor))
             .cornerRadius(Constant.cornerRadiusOfCell)
         }
-    }
-}
-
-struct OriginView_Previews: PreviewProvider {
-    static var previews: some View {
-        OriginView()
     }
 }

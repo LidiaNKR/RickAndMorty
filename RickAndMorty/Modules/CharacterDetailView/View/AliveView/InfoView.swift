@@ -1,5 +1,5 @@
 //
-//  AliveView.swift
+//  InfoView.swift
 //  RickAndMorty
 //
 //  Created by Лидия Ладанюк on 18.08.2023.
@@ -7,34 +7,28 @@
 
 import SwiftUI
 
-struct AliveView: View {
-    
-    let species: String = "Human"
-    let type: String = "None"
-    let gender: String = "Male"
+struct InfoView: View {
+
+    @ObservedObject var viewModel = CharacterDetailViewModel()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-
-            TitleText(text: "Alive")
-            
+            TitleText(text: "Info")
             VStack(alignment: .center, spacing: 16) {
                 HStack {
                     NameText(text: "Species:")
                     Spacer()
-                    DescriptionText(text: species)
+                    DescriptionText(text: viewModel.infoSpecies)
                 }
-                
                 HStack {
                     NameText(text: "Type:")
                     Spacer()
-                    DescriptionText(text: type)
+                    DescriptionText(text: viewModel.infoType ?? "")
                 }
-                
                 HStack {
                     NameText(text: "Gender:")
                     Spacer()
-                    DescriptionText(text: gender)
+                    DescriptionText(text: viewModel.infoGender)
                 }
             }
             .padding([.leading, .trailing], 16)
@@ -42,11 +36,5 @@ struct AliveView: View {
             .background(Color(uiColor: Constant.cellBackGroundColor))
             .cornerRadius(Constant.cornerRadiusOfCell)
         }
-    }
-}
-
-struct AliveView_Previews: PreviewProvider {
-    static var previews: some View {
-        AliveView()
     }
 }
