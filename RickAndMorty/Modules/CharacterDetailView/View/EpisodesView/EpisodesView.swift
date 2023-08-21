@@ -8,23 +8,25 @@
 import SwiftUI
 
 struct EpisodesView: View {
+    
+    @ObservedObject var viewModel = CharacterDetailViewModel()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            
             TitleText(text: "Episodes")
-            
-            ForEach(0..<5) { index in
-                EpisodesCell()
-                    .frame(maxWidth: .infinity)
+            ForEach(viewModel.episodes)  { episode in
+                EpisodesCell(
+                    name: episode.name,
+                    episode: episode.episode,
+                    date: episode.date
+                )
+                .frame(maxWidth: .infinity)
             }
         }
         .frame(width: 327)
         .frame(maxWidth: .infinity)
-    }
-}
-
-struct EpisodesView_Previews: PreviewProvider {
-    static var previews: some View {
-        EpisodesView()
+        .task {
+            viewModel.fetchEpisodes()
+        }
     }
 }

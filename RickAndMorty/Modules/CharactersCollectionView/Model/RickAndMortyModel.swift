@@ -15,23 +15,25 @@ struct Result: Decodable {
     let name: String
     let status: String
     let species: String
+    let type: String?
     let gender: String
     let origin: Location
     let image: String
     let episode: [String]
-    let url: String
 }
 
 struct Location: Decodable {
     let name: String
 }
 
-struct Episode: Decodable {
+struct Episode: Decodable, Identifiable {
+    let id: Int
     let name: String
     let date: String
     let episode: String
     
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case name = "name"
         case date = "air_date"
         case episode = "episode"

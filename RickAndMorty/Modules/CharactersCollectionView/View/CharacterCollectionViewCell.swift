@@ -9,14 +9,22 @@ import UIKit
 
 class CharacterCollectionViewCell: UICollectionViewCell {
     
-    //MARK: - Static properties
+    //MARK: - Public properties
     static let identifier = "characterCell"
+    
+    weak var viewModel: CollectionViewCellViewModelType? {
+        willSet(viewModel) {
+            guard let viewModel = viewModel else { return }
+            characterImageView.fetchImage(from: viewModel.characterImage)
+            characterLabel.text = viewModel.characterName
+        }
+    }
     
     //MARK: - Private properties
     private let characterImageView: NetworkImageView = {
         let imageView = NetworkImageView(frame: .zero)
-        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
         imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = Constant.cornerRadiusOfImageCell
         return imageView
@@ -30,6 +38,7 @@ class CharacterCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    
     //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,14 +49,6 @@ class CharacterCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    weak var viewModel: CollectionViewCellViewModelType? {
-        willSet(viewModel) {
-            guard let viewModel = viewModel else { return }
-            characterImageView.fetchImage(from: viewModel.characterImage)
-            characterLabel.text = viewModel.characterName
-        }
     }
     
     // MARK: - Private methods

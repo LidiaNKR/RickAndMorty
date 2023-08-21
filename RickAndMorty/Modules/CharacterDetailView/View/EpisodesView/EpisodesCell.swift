@@ -9,31 +9,32 @@ import SwiftUI
 
 struct EpisodesCell: View {
     
-    let name: String = "Pilot"
-    let date: String = "Data"
-    let episode: String = "Episode"
+    var name: String?
+    var episode: String?
+    var date: String?
     
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(name)
+            Text(name ?? "None")
                 .font(
                     Font.custom("Gilroy", size: 17)
                         .weight(.semibold)
                 )
                 .foregroundColor(.white)
-            
             HStack {
-                Text(episode)
+                Text(episode?
+                    .replacingOccurrences(of: "S0", with: "Season:")
+                    .replacingOccurrences(of: "E0+", with: ", Episode:", options: .regularExpression)
+                    .replacingOccurrences(of: "E1", with: ", Episode: 1", options: .regularExpression)
+                    ?? "Season: None, Episode: None")
                     .font(
                         Font.custom("Gilroy", size: 13)
                             .weight(.medium)
                     )
                     .foregroundColor(.green)
-                
                 Spacer()
-                
-                Text(date)
+                Text(date ?? "None")
                     .font(
                         Font.custom("Gilroy", size: 12)
                             .weight(.medium)
@@ -45,11 +46,5 @@ struct EpisodesCell: View {
         .frame(width: 327, height: 80)
         .background(Color(uiColor: Constant.cellBackGroundColor))
         .cornerRadius(Constant.cornerRadiusOfCell)
-    }
-}
-
-struct ItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        EpisodesCell()
     }
 }

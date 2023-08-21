@@ -8,10 +8,21 @@
 import Foundation
 
 protocol CollectionViewViewModelType {
+    ///Получение данных о персонажах из сети
+    ///- Parameters:
+    ///   - completion: Обработчик завершения, в который возвращается результат выполнения функции.
     func fetchData(completionHandler: @escaping () -> ())
-    func numberOfRows() -> Int
+    
+    ///Получение количества элементов(персонажей)
+    func numberOfItems() -> Int
+    
+    ///Получение ViewModel ячейки
     func cellViewModel(forIndexPath indexPath: IndexPath) -> CollectionViewCellViewModelType?
-    func viewModelForSelectedRow() -> CharacterDetailViewModelType?
+    
+    ///Получение ViewModel для выбранной ячейки
+    func viewModelForSelectedRow() -> CharacterDetailViewModel?
+    
+    ///Получение индекса выбранного элемента(персонажа)
     func selectItem(atIndexPath indexPath: IndexPath)
 }
 
@@ -33,8 +44,8 @@ final class CharacterCollectionViewModel: CollectionViewViewModelType {
             }
         }
     }
-    
-    func numberOfRows() -> Int {
+
+    func numberOfItems() -> Int {
         return result.count
     }
     
@@ -43,7 +54,7 @@ final class CharacterCollectionViewModel: CollectionViewViewModelType {
         return CharacterCollectionCellViewModel(character: character)
     }
     
-    func viewModelForSelectedRow() -> CharacterDetailViewModelType? {
+    func viewModelForSelectedRow() -> CharacterDetailViewModel? {
         guard let selectedIndexPath = selectedIndexPath else { return nil }
         return CharacterDetailViewModel(character: result[selectedIndexPath.item])
     }
